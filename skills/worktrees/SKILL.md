@@ -14,6 +14,8 @@ disable-model-invocation: true
    Show each item's deliverable, acceptance criteria, exact allowed files,
    genuine prerequisites, and verification command with its repository evidence.
    Ask for a documented command when missing; never assume a successful default.
+   Record required runtimes, dependency setup commands and their working
+   directories in each item's body, backed by declared repository sources.
 3. After confirming the breakdown, write `docs/work/_index.md` and one document
    per stable work-item ID using the [index](assets/_index.md) and
    [work-item](assets/work-item.md) templates. Fill all placeholders. Use literal
@@ -43,5 +45,7 @@ disable-model-invocation: true
 6. Separately obtain confirmation to create the shown worktrees, then use
    `--create --yes`. Creation does not launch agents. Existing owned worktrees
    are reused; collisions require explicit resolution, never reset or deletion.
+   Report created paths and outstanding setup for each worktree. Dependencies
+   from the main checkout are not copied; setup installs require confirmation.
 7. Show `/automagic:run`. Changed inputs/base commits require a new reviewed
    snapshot. Do not silently replan, start agents, commit or push.

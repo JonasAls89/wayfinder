@@ -117,6 +117,9 @@ The current-only support policy is in
 [ADR 0018](docs/adr/0018-current-workflow-only.md); the setup scope is in
 [ADR 0019](docs/adr/0019-repository-security-setup.md).
 
+For npm/JavaScript/TypeScript repositories, see the
+[project tooling and worktree setup guide](skills/run/references/npm-projects.md).
+
 ### Why not Cookiecutter?
 
 Cookiecutter generates skeletons, not this recurring workflow. The plugin's
@@ -125,10 +128,8 @@ not a dependency or parallel template product.
 
 ## Development
 
-The Python package is private implementation, not an installable workflow CLI.
-The launcher explicitly loads its bundled sources, so cached/global installs
-cannot override them; dependencies still come from the bundle's uv environment.
-Skills invoke the installed bundle's environment with an explicit target path:
+The private Python runtime uses bundled sources and uv dependencies, not global
+installs or target-project dependencies. Skills pass the target path explicitly:
 
 ```sh
 uv run --project "/absolute/plugin-root" --locked python "/absolute/plugin-root/scripts/helper.py" context --path "/absolute/target-repository"

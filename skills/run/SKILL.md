@@ -16,7 +16,12 @@ disable-model-invocation: true
    Use `--only wi-01,wi-03` for a subset (unfinished prerequisites are included)
    or an explicitly requested positive `--max-concurrency` override.
 3. Present the snapshot, base, branches, dependency waves, agent and verification
-   commands. Obtain confirmation for unattended shell access, then remove
+   commands. Check the handoff's runtime and dependency setup in every worktree;
+   dependencies from the main checkout are not inherited. Obtain confirmation
+   before setup installs and stop on missing tools, undocumented setup or failed
+   installation. For npm/JavaScript/TypeScript projects, consult the
+   [project tooling guide](references/npm-projects.md).
+   Obtain confirmation for unattended shell access, then remove
    `--dry-run` and add `--yes`. The default engine is Copilot CLI; this is not a
    sandbox. Do not replace it with chat-host subagents.
 4. The helper rechecks committed inputs and approval after confirmation, records

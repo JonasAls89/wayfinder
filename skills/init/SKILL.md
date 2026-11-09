@@ -39,6 +39,8 @@ uv run --project <plugin-root> --locked python <plugin-root>/scripts/helper.py i
    Obtain confirmation before edits or introducing tools. Merge into existing
    configs rather than replacing custom hooks. Keep a pinned zizmor hook in the
    final configuration, even when the baseline config was skipped.
+   For npm/JavaScript/TypeScript projects, follow the
+   [project tooling guide](../run/references/npm-projects.md).
 5. Propose weekly Dependabot entries for the actual package ecosystems and
    manifest/lockfile directories. Framework names are not package ecosystems:
    verify the package-manager mapping against

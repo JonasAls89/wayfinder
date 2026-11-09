@@ -15,6 +15,13 @@ verify_sources = ["REPLACE with the repository document containing that command"
 
 Describe only the approved work this item delivers.
 
+## Environment and verification
+
+List required runtimes, dependency setup commands and their working directories,
+using evidence in `verify_sources` or selected design sources. Describe setup
+needed in each worktree before `verify_command` can run. Keep dependencies and
+build output ignored, and preserve reviewed manifests and lockfiles.
+
 ## Rationale and provenance
 
 Explain how it implements the settled design. Link the relevant intent and
