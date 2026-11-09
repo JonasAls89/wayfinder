@@ -145,7 +145,7 @@ uv run bandit -c pyproject.toml -r .
 uv run prek run --all-files
 ```
 
-Tests include disposable Git repositories and fake workers; they do not launch
-real unattended agents. Coverage of helpers and the private launcher must remain
-at least 90%. Repository-specific Python tooling/CI stays here; target hooks are
-adapted to the project's stack.
+Tests use temporary repositories and fake workers, not real agents.
+Helper/launcher coverage must remain at least 90%. npm/TypeScript tests require
+Node.js and npm (CI uses Node 22), plus npm registry access for the initial
+compiler download; dependencies and caches stay in temporary test directories.
