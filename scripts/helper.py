@@ -9,15 +9,15 @@ from pathlib import Path
 
 BUNDLE = Path(__file__).resolve().parents[1]
 SOURCES = BUNDLE / "src"
-if not (SOURCES / "automagic/__init__.py").is_file():
+if not (SOURCES / "wayfinder/__init__.py").is_file():
     raise SystemExit(f"Missing bundled runtime sources: {SOURCES}")
 # The Git-distributed plugin, not a cached/global editable install, owns its runtime.
 sys.path.insert(0, str(SOURCES))
 
-import automagic  # noqa: E402
-from automagic import guardrails, runner, worktrees  # noqa: E402
-from automagic.config import Config  # noqa: E402
-from automagic.execution import (  # noqa: E402
+import wayfinder  # noqa: E402
+from wayfinder import guardrails, runner, worktrees  # noqa: E402
+from wayfinder.config import Config  # noqa: E402
+from wayfinder.execution import (  # noqa: E402
     approve,
     git_root,
     load_plan,
@@ -25,9 +25,9 @@ from automagic.execution import (  # noqa: E402
     require_approval,
     require_committed,
 )
-from automagic.scaffold import scaffold  # noqa: E402
+from wayfinder.scaffold import scaffold  # noqa: E402
 
-if automagic.__file__ is None or not Path(automagic.__file__).resolve().is_relative_to(SOURCES):
+if wayfinder.__file__ is None or not Path(wayfinder.__file__).resolve().is_relative_to(SOURCES):
     raise SystemExit("Loaded runtime does not belong to this plugin bundle")
 
 

@@ -5,12 +5,12 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-from automagic.config import Config
+from wayfinder.config import Config
 
 _FENCE = re.compile(r"```.*?```", re.DOTALL)
 _INLINE = re.compile(r"`[^`\n]*`")
 _LINK = re.compile(r"\[[^\]]*\]\(([^)\s]+)(?:\s+\"[^\"]*\")?\)")
-START, END = "<!-- automagic:context:start -->", "<!-- automagic:context:end -->"
+START, END = "<!-- wayfinder:context:start -->", "<!-- wayfinder:context:end -->"
 
 
 def context_files(root: Path) -> list[Path]:
@@ -106,7 +106,7 @@ def index_parts(root: Path) -> tuple[str, str, str]:
         else f"# Repository context\n\n{START}\n{END}\n"
     )
     if text.count(START) != 1 or text.count(END) != 1 or text.index(START) > text.index(END):
-        raise ValueError("docs/CONTEXT.md requires one ordered pair of automagic:context markers")
+        raise ValueError("docs/CONTEXT.md requires one ordered pair of wayfinder:context markers")
     head, rest = text.split(START, 1)
     tail = rest.split(END, 1)[1]
     return text, head, tail

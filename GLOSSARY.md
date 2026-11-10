@@ -1,6 +1,6 @@
-# Automagic
+# Wayfinder
 
-Automagic connects grounded project intent and reviewed design to bounded,
+Wayfinder connects grounded project intent and reviewed design to bounded,
 verified implementation work.
 
 ## Language

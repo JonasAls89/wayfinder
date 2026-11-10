@@ -12,28 +12,28 @@ target project's dependency environment.
 
 ## Decision
 
-Distribute five skills through the [automagic plugin](../../.claude-plugin/plugin.json):
+Distribute five skills through the [Wayfinder plugin](../../.claude-plugin/plugin.json):
 init, context, intent, worktrees and run. The public CLI and former planning,
 publication and review surfaces are retired.
 
 Keep high-level project scope in [INTENT.md](../../INTENT.md); the external
-user-invoked `mattpocock-skills:grill-with-docs` owns design interviews. Automagic's
+user-invoked `mattpocock-skills:grill-with-docs` owns design interviews. Wayfinder's
 [worktrees skill](../../skills/worktrees/SKILL.md) proposes implementation-sized
 work items without resolving new design decisions.
 
 Use reviewed Markdown under `docs/work/`, with typed fenced TOML metadata.
-[Execution helpers](../../src/automagic/execution.py) record approval fingerprints
+[Execution helpers](../../src/wayfinder/execution.py) record approval fingerprints
 covering committed input contents and the base commit. A changed snapshot needs
 new explicit approval; no selective planning-graph invalidation is retained.
-State and logs remain orchestrator-owned under `.automagic/execution/`.
+State and logs remain orchestrator-owned under `.wayfinder/execution/`.
 
-[Initialization](../../src/automagic/scaffold.py) generates only Markdown/agent
+[Initialization](../../src/wayfinder/scaffold.py) generates only Markdown/agent
 assets, preserves existing content and does not install target dependencies.
-[Context validation](../../src/automagic/guardrails.py) replaces the separate
+[Context validation](../../src/wayfinder/guardrails.py) replaces the separate
 check surface. Cookiecutter is deferred: it would add a distribution mechanism
 without solving this recurring workflow or existing-repository adoption.
 
-The [runner](../../src/automagic/runner.py) retains Copilot CLI dependency waves,
+The [runner](../../src/wayfinder/runner.py) retains Copilot CLI dependency waves,
 verified completion and human-owned commits. Verification must be documented in
 committed repository evidence. No implementation changes are staged, committed
 or pushed by the orchestrator. Dependents wait for genuine manual commits;
@@ -62,7 +62,7 @@ abandoned locks need explicit removal after checking for active workers.
 This contract supersedes ADRs 0002-0016 as the active product contract, carrying
 forward human-owned commits and categorized intent-based branches. Their
 accepted text is preserved unchanged in the
-[pre-migration ADR snapshot](https://github.com/JonasAls89/automagic-cli/tree/53b19f4a052e776187eb26430160126414eba22e/docs/adr).
+[pre-migration ADR snapshot](https://github.com/JonasAls89/wayfinder/tree/53b19f4a052e776187eb26430160126414eba22e/docs/adr).
 Implementation-coupled historical documents are no longer active local context;
 their source links resolve within that pinned historical revision. ADR 0001
 and the decision template remain active.

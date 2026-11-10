@@ -8,7 +8,7 @@ from pathlib import Path
 
 from jinja2 import Environment, StrictUndefined
 
-from automagic.config import Config
+from wayfinder.config import Config
 
 SETUP_CONFIGS = {
     ".github/dependabot.yml",

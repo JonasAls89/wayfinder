@@ -2,19 +2,21 @@ import json
 import os
 import shutil
 import subprocess
+import sys
 import tomllib
 from pathlib import Path
 
 import yaml
 
-from automagic.config import Config
-from automagic.guardrails import _links, check
 from scripts.helper import BUNDLE, main
+from wayfinder.config import Config
+from wayfinder.guardrails import _links, check
 
 
 def test_exactly_five_consistent_plugin_skills_and_resolvable_resources():
     manifest = json.loads((BUNDLE / ".claude-plugin/plugin.json").read_text())
     assert manifest["name"] == "wayfinder"
+    assert manifest["repository"] == "https://github.com/JonasAls89/wayfinder"
     names = {"init", "context", "intent", "worktrees", "run"}
     assert set(manifest["skills"]) == {f"./skills/{name}" for name in names}
     assert {path.name for path in (BUNDLE / "skills").iterdir() if path.is_dir()} == names
@@ -25,16 +27,36 @@ def test_exactly_five_consistent_plugin_skills_and_resolvable_resources():
         assert f"name: {name}\n" in text
         assert "disable-model-invocation: true" in text
         assert f"/wayfinder:{name}" in readme
-        assert "/automagic:" not in text
         for link in _links(text):
             if link.startswith("https://"):
                 continue
             assert (path.parent / link).resolve().is_relative_to(BUNDLE)
             assert (path.parent / link).exists()
     project = tomllib.loads((BUNDLE / "pyproject.toml").read_text())
-    assert project["project"]["name"] == "automagic"
+    assert project["project"]["name"] == manifest["name"]
+    assert (BUNDLE / "src/wayfinder/__init__.py").is_file()
     assert "scripts" not in project["project"]
     assert check(BUNDLE, Config()) == []
+
+
+def test_helper_context_check_starts_outside_bundle(tmp_path):
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(BUNDLE / "scripts/helper.py"),
+            "context",
+            "--path",
+            str(tmp_path),
+            "--check",
+        ],
+        cwd=tmp_path,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stderr
+    assert result.stdout == "context guardrails passed\n"
+    assert list(tmp_path.iterdir()) == []
 
 
 def test_installed_bundle_uses_own_environment_and_assets(tmp_path, repo_factory, commit, worker):
@@ -52,7 +74,7 @@ def test_installed_bundle_uses_own_environment_and_assets(tmp_path, repo_factory
     )
     (target / "pyproject.toml").write_bytes(manifest)
     (target / "uv.lock").write_bytes(b"user lock")
-    shadow = target / "shadow/automagic"
+    shadow = target / "shadow/wayfinder"
     shadow.mkdir(parents=True)
     (shadow / "__init__.py").write_text("raise RuntimeError('foreign runtime was imported')\n")
     environment = {**os.environ, "PYTHONPATH": str(shadow.parent)}
@@ -118,7 +140,7 @@ def test_installed_bundle_uses_own_environment_and_assets(tmp_path, repo_factory
     invoke("run", "--dry-run", "--runner-command", worker)
     output = invoke("run", "--yes", "--runner-command", worker)
     assert "waiting for manual commits" in output
-    state_file = next((repository / ".automagic/execution").glob("*/run.json"))
+    state_file = next((repository / ".wayfinder/execution").glob("*/run.json"))
     state = json.loads(state_file.read_text())
     assert state["items"]["wi-01"]["status"] == "done"
     assert state["items"]["wi-02"]["status"] == "pending"

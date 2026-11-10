@@ -4,10 +4,10 @@ from pathlib import Path
 
 import pytest
 
-from automagic import runner, worktrees
-from automagic.config import Config
-from automagic.execution import approve, git, load_plan
 from scripts.helper import main
+from wayfinder import runner, worktrees
+from wayfinder.config import Config
+from wayfinder.execution import approve, git, load_plan
 
 
 def launch(root, worker, *extra):
@@ -29,7 +29,7 @@ def test_waves_selection_preview_and_unknown_ids(repo_factory, worker, capsys):
     root = repo_factory([[], ["wi-01"], ["wi-01"], ["wi-02", "wi-03"]])
     plan = ready(root)
     before = {
-        str(path): path.read_bytes() for path in (root / ".automagic").rglob("*") if path.is_file()
+        str(path): path.read_bytes() for path in (root / ".wayfinder").rglob("*") if path.is_file()
     }
     assert launch(root, worker, "--dry-run", "--only", "wi-04") == 0
     output = capsys.readouterr().out
@@ -38,7 +38,7 @@ def test_waves_selection_preview_and_unknown_ids(repo_factory, worker, capsys):
     assert "wave 3: wi-04" in output
     assert not worktrees.propose(plan, root)[0].path.exists()
     assert before == {
-        str(path): path.read_bytes() for path in (root / ".automagic").rglob("*") if path.is_file()
+        str(path): path.read_bytes() for path in (root / ".wayfinder").rglob("*") if path.is_file()
     }
     assert launch(root, worker, "--only", "missing") == 1
     assert "unknown work item" in capsys.readouterr().err
@@ -113,7 +113,7 @@ def test_precreated_worktrees_resume_manual_commit_waves(repo_factory, worker, c
     final = Path(state.items["wi-04"].path)
     assert all((final / f"wi-{i:02}.txt").exists() for i in range(1, 5))
     assert not (root / "wi-01.txt").exists()
-    assert ".automagic/BRIEF.md" not in git(["ls-tree", "-r", "--name-only", "HEAD"], final).stdout
+    assert ".wayfinder/BRIEF.md" not in git(["ls-tree", "-r", "--name-only", "HEAD"], final).stdout
     assert launch(root, worker) == 0
     assert "nothing to run" in capsys.readouterr().out
 
@@ -154,7 +154,7 @@ def test_failure_blocks_dependents_but_not_siblings(repo_factory, worker, comman
     failing = (
         command(
             "from pathlib import Path; "
-            "item = Path('.automagic/BRIEF.md').read_text().splitlines()[0].split()[-1]; "
+            "item = Path('.wayfinder/BRIEF.md').read_text().splitlines()[0].split()[-1]; "
             "assert item != 'wi-02'; Path(item + '.txt').write_text('x\\n')"
         )
         + " {prompt}"

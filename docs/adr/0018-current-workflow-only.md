@@ -17,7 +17,7 @@ The [private helper](../../scripts/helper.py) exposes only the current workflows
 it does not inspect retired skill names or load repository configuration files.
 The unused tracked configuration and state-directory constant are removed.
 
-[Execution](../../src/automagic/execution.py) requires `docs/work/_index.md`
+[Execution](../../src/wayfinder/execution.py) requires `docs/work/_index.md`
 and typed Markdown work items. A missing handoff reports that requirement without
 probing other formats. Design-source filenames receive no special classification;
 regular committed files named `graph.json` are ordinary input documents.
@@ -25,11 +25,11 @@ The automation runtime namespace remains excluded from design inputs.
 
 Remove compatibility-specific fixtures, tests and active workflow guidance.
 There is no migration, conversion, cleanup or preservation feature for former
-formats. Generic safety remains: [init](../../src/automagic/scaffold.py) skips
+formats. Generic safety remains: [init](../../src/wayfinder/scaffold.py) skips
 existing files unless overwrite is explicitly approved, and
-[context](../../src/automagic/guardrails.py) retains text outside its managed
+[context](../../src/wayfinder/guardrails.py) retains text outside its managed
 region. Current snapshot/worktree ownership, staging and human-owned commit
-policies in the [runner](../../src/automagic/runner.py) remain unchanged.
+policies in the [runner](../../src/wayfinder/runner.py) remain unchanged.
 
 ## Consequences
 

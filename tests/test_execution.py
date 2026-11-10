@@ -2,9 +2,10 @@ import json
 
 import pytest
 
-from automagic import worktrees
-from automagic.config import Config
-from automagic.execution import (
+from scripts.helper import main
+from wayfinder import worktrees
+from wayfinder.config import Config
+from wayfinder.execution import (
     INDEX,
     approve,
     atomic_write,
@@ -15,12 +16,16 @@ from automagic.execution import (
     require_committed,
     state_path,
 )
-from scripts.helper import main
 
 
 def replace(root, name, before, after):
     path = root / name
     path.write_text(path.read_text().replace(before, after))
+
+
+def test_runtime_state_uses_wayfinder_directory(tmp_path):
+    assert state_path(tmp_path, "run.json") == tmp_path / ".wayfinder/execution/run.json"
+    assert list(tmp_path.iterdir()) == []
 
 
 def test_snapshot_requires_helper_approval_and_committed_inputs(repo_factory, commit):
@@ -78,7 +83,12 @@ def test_every_reviewed_input_invalidates_approval(repo_factory, commit, name):
         ('sources = ["INTENT.md", "README.md"]', 'sources = ["missing.md"]', "Missing execution"),
         (
             'sources = ["INTENT.md", "README.md"]',
-            'sources = [".automagic/execution/approval.json"]',
+            'sources = [".wayfinder/execution/approval.json"]',
+            "Runtime state",
+        ),
+        (
+            'sources = ["INTENT.md", "README.md"]',
+            'sources = [".wayfinder/plan/plan.md"]',
             "Runtime state",
         ),
         ('items = ["docs/work/wi-01.md"]', 'items = ["README.md"]', "directly in docs/work"),
@@ -91,7 +101,7 @@ def test_invalid_indexes_fail_before_state_writes(repo_factory, before, after, m
     replace(root, INDEX, before, after)
     with pytest.raises(ValueError, match=message):
         load_plan(root)
-    assert not (root / ".automagic").exists()
+    assert not (root / ".wayfinder").exists()
 
 
 @pytest.mark.parametrize(
@@ -103,7 +113,8 @@ def test_invalid_indexes_fail_before_state_writes(repo_factory, before, after, m
         ("est_lines = 100", "est_lines = 0", "est_lines"),
         ('files = ["wi-01.txt"]', "files = []", "files"),
         ('files = ["wi-01.txt"]', 'files = ["../escape"]', "Invalid repository"),
-        ('files = ["wi-01.txt"]', 'files = [".automagic/BRIEF.md"]', "non-runtime"),
+        ('files = ["wi-01.txt"]', 'files = [".wayfinder/BRIEF.md"]', "non-runtime"),
+        ('files = ["wi-01.txt"]', 'files = [".wayfinder/execution/run.json"]', "non-runtime"),
         ('files = ["wi-01.txt"]', 'files = ["docs"]', "individual"),
         ('acceptance_criteria = ["wi-01.txt exists"]', 'acceptance_criteria = [" "]', "blank"),
         ('verify_sources = ["README.md"]', "verify_sources = []", "verify_sources"),
@@ -184,7 +195,7 @@ def test_symlink_escape_state_lock_and_atomic_cleanup(tmp_path):
     atomic_write(destination, "second")
     assert destination.read_text() == "second"
     assert list(destination.parent.iterdir()) == [destination]
-    (root / ".automagic/execution/link").symlink_to(root / "write")
+    (root / ".wayfinder/execution/link").symlink_to(root / "write")
     with pytest.raises(ValueError, match="symlinks"):
         state_path(root, "link/file")
 

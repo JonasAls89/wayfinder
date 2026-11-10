@@ -13,8 +13,8 @@ from typing import Final, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from automagic.config import Config
-from automagic.execution import (
+from wayfinder.config import Config
+from wayfinder.execution import (
     Plan,
     WorkItem,
     atomic_write,
@@ -22,8 +22,8 @@ from automagic.execution import (
     require_approval,
     require_input_contents,
 )
-from automagic.guardrails import check
-from automagic.worktrees import Proposal, brief, create
+from wayfinder.guardrails import check
+from wayfinder.worktrees import Proposal, brief, create
 
 PENDING: Final = "pending"
 RUNNING: Final = "running"
@@ -31,10 +31,10 @@ DONE: Final = "done"
 FAILED: Final = "failed"
 BLOCKED: Final = "blocked"
 RunStatus = Literal["pending", "running", "done", "failed", "blocked"]
-BRIEF_PATH = ".automagic/BRIEF.md"
+BRIEF_PATH = ".wayfinder/BRIEF.md"
 
 PROMPT = (
-    "Read .automagic/BRIEF.md and AGENTS.md (if present). Implement only the work item "
+    "Read .wayfinder/BRIEF.md and AGENTS.md (if present). Implement only the work item "
     "described in the brief; do not expand scope. Run the project's quality gates, then leave "
     "your changes in the worktree for human review and commit grouping. Preserve existing "
     "staging. Do not stage, commit, push, merge, rebase or switch branches."

@@ -22,7 +22,7 @@ Extend [init](../../skills/init/SKILL.md) with three bundled setup files:
 - [Pre-commit configuration](../../skills/init/assets/.pre-commit-config.yaml),
   with common file checks and the pinned official zizmor hook.
 
-The [scaffolder](../../src/automagic/scaffold.py) permits these YAML paths in
+The [scaffolder](../../src/wayfinder/scaffold.py) permits these YAML paths in
 addition to Markdown. It retains dry-run and explicit overwrite behavior.
 The init skill inspects actual manifests, lockfiles, frameworks and existing
 tool configuration, then proposes confirmed hook additions and weekly Dependabot

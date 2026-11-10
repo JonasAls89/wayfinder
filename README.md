@@ -9,21 +9,21 @@ execution, plus docs/security setup. No standalone Wayfinder CLI.
 
 Install this repository as an agent plugin from its Git URL or a local checkout.
 In VS Code, use **Chat: Install Plugin from Source** with
-`https://github.com/JonasAls89/automagic-cli`, or the local repository path.
+`https://github.com/JonasAls89/wayfinder`, or the local repository path.
 See [VS Code's plugin documentation](https://code.visualstudio.com/docs/agent-customization/agent-plugins)
 for harness and policy requirements.
 
 For Copilot CLI, install the plugin from a terminal:
 
 ```sh
-gh copilot -- plugin install JonasAls89/automagic-cli
+gh copilot -- plugin install JonasAls89/wayfinder
 gh copilot -- plugin list
 ```
 
 For local development without a persistent installation, start a session with:
 
 ```sh
-gh copilot -- --plugin-dir /absolute/path/to/automagic-cli
+gh copilot -- --plugin-dir /absolute/path/to/wayfinder
 ```
 
 In a fresh session, use `/skills list` to verify discovery. Install the complete
@@ -33,11 +33,13 @@ bundle, not individual skill folders: it contains the
 namespace; skill names remain unprefixed. Invoke `/wayfinder:context`, not the
 bare `/context`, to avoid command-name collisions.
 
-Existing `automagic` installations must install Wayfinder separately, then
-disable or uninstall the old plugin in the client where it was installed.
-No old command aliases or automatic cleanup are provided. The repository URL,
-private Python package, runtime state and context markers retain their existing
-names ([namespace decision](docs/adr/0020-wayfinder-plugin-namespace.md)).
+The public plugin and private Python package both use `wayfinder`. Runtime
+data lives under `.wayfinder/`, and managed context markers use
+`wayfinder:context`. Refresh outdated plugin installations in the client where
+they were installed. Existing repository guidance needs reviewed edits, and
+execution needs a fresh approved snapshot; previous runtime state is not
+automatically imported or deleted
+([complete rename](docs/adr/0021-complete-wayfinder-rename.md)).
 
 Execution requires uv, Python 3.12+ and Git. Running agents additionally requires
 Copilot CLI. Thorough planning uses your separately installed Matt Pocock plugin,
@@ -93,7 +95,7 @@ one fenced TOML block:
   Unknown checks must be documented and committed before execution.
 - Keep each context document below 8,000 bytes. Default sizing allows about
   40,000 estimated context tokens and 400 changed lines; oversized work needs a
-  reviewed split ([validation](src/automagic/execution.py)).
+  reviewed split ([validation](src/wayfinder/execution.py)).
 
 The helper fingerprints intent, the index, briefs, selected design inputs,
 existing agent/context guidance, verification evidence and the base commit.
@@ -106,7 +108,7 @@ exclude those local changes when reviewing the execution handoff.
 
 ### Execution and human control
 
-The [runner](src/automagic/runner.py) executes ready work items in waves, with
+The [runner](src/wayfinder/runner.py) executes ready work items in waves, with
 default concurrency 3. `--only` on the private launcher supports stable IDs and
 includes unfinished prerequisites. Repeating the same approved snapshot resumes
 unfinished work without rerunning completed agents.
@@ -122,10 +124,10 @@ branches; implementation agents never commit, push or merge. Guardrails are
 best-effort, not a sandbox: unattended Copilot CLI has shell access.
 
 State, approvals, worktree ownership and logs are local under
-`.automagic/execution/`; keep them out of commits. Each worktree has an untracked
-`.automagic/BRIEF.md`. Branches retain categorized intent-based names with a
+`.wayfinder/execution/`; keep them out of commits. Each worktree has an untracked
+`.wayfinder/BRIEF.md`. Branches retain categorized intent-based names with a
 snapshot suffix. Existing unowned branches/paths are collisions, not opportunities
-for reset, deletion or automatic adoption ([worktree helpers](src/automagic/worktrees.py)).
+for reset, deletion or automatic adoption ([worktree helpers](src/wayfinder/worktrees.py)).
 Concurrent mutations are locked; check for active helpers/workers before
 explicitly removing an abandoned lock. A failed or interrupted worker is retried
 only after another confirmed run; logs and existing changes remain available.
@@ -134,8 +136,9 @@ only after another confirmed run; logs and existing changes remain available.
 
 Init skips existing files; a skip is not an upgrade. The skill proposes confirmed
 edits for outdated sections, including adding managed context markers when absent.
-Execution requires the current reviewed handoff under `docs/work/` and uses local
-state under `.automagic/execution/`.
+Reviewed plans and work items live under `docs/work/`, not `.wayfinder/plan/`.
+Execution requires that current reviewed handoff and uses local state under
+`.wayfinder/execution/`.
 
 The current-only support policy is in
 [ADR 0018](docs/adr/0018-current-workflow-only.md); the setup scope is in

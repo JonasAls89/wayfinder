@@ -10,7 +10,7 @@ project tooling; it does not generate an application or install its dependencies
 
 ## Project-owned verification
 
-The [runner](../../../src/automagic/runner.py) executes the documented
+The [runner](../../../src/wayfinder/runner.py) executes the documented
 `verify_command` at the worktree root. When the project defines a `verify` npm
 script, the handoff can use:
 
@@ -27,7 +27,7 @@ project's actual workspace/package layout rather than assuming a directory.
 
 ## Prepare every worktree explicitly
 
-[Worktree creation](../../../src/automagic/worktrees.py) checks out committed
+[Worktree creation](../../../src/wayfinder/worktrees.py) checks out committed
 files; it does not copy `node_modules` or install project dependencies.
 
 1. Record the required runtimes, documented setup command and working directory

@@ -5,7 +5,7 @@ import sys
 
 import pytest
 
-from automagic.execution import git
+from wayfinder.execution import git
 
 
 @pytest.fixture
@@ -21,7 +21,7 @@ def worker(command):
     return (
         command(
             "from pathlib import Path; "
-            "item = Path('.automagic/BRIEF.md').read_text().splitlines()[0].split()[-1]; "
+            "item = Path('.wayfinder/BRIEF.md').read_text().splitlines()[0].split()[-1]; "
             "Path(item + '.txt').write_text('x\\n')"
         )
         + " {prompt}"
@@ -61,7 +61,7 @@ def repo_factory(tmp_path, command, commit):
         dependencies = dependencies if dependencies is not None else [[]]
         verify = verify or command(
             "from pathlib import Path; "
-            "item = Path('.automagic/BRIEF.md').read_text().splitlines()[0].split()[-1]; "
+            "item = Path('.wayfinder/BRIEF.md').read_text().splitlines()[0].split()[-1]; "
             "assert Path(item + '.txt').is_file()"
         )
         (root / "README.md").write_text(f"# Demo\n\nVerification: `{verify}`\n")

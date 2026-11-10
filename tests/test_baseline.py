@@ -1,10 +1,10 @@
 import pytest
 import yaml
 
-from automagic import guardrails
-from automagic.config import Config
-from automagic.scaffold import scaffold
 from scripts.helper import BUNDLE, main
+from wayfinder import guardrails
+from wayfinder.config import Config
+from wayfinder.scaffold import scaffold
 
 ASSETS = BUNDLE / "skills/init/assets"
 
@@ -26,8 +26,9 @@ def test_init_creates_documentation_and_setup_configs_idempotently(tmp_path, cap
         ".github/instructions/docs.instructions.md": "context",
     }.items():
         assert f"/wayfinder:{skill}".encode() in files[name]
-    assert guardrails.START.encode() in files["docs/CONTEXT.md"]
-    assert guardrails.END.encode() in files["docs/CONTEXT.md"]
+    assert b"<!-- wayfinder:context:start -->" in files["docs/CONTEXT.md"]
+    assert b"<!-- wayfinder:context:end -->" in files["docs/CONTEXT.md"]
+    assert b".wayfinder/BRIEF.md" in files["AGENTS.md"]
     yaml_files = {
         ".github/dependabot.yml",
         ".github/zizmor.yml",
@@ -59,7 +60,7 @@ def test_init_creates_documentation_and_setup_configs_idempotently(tmp_path, cap
     assert any(hook["id"] == "zizmor" for repo in hooks for hook in repo["hooks"])
     assert not (tmp_path / "INTENT.md").exists()
     assert not (tmp_path / ".github/skills").exists()
-    assert not (tmp_path / ".automagic").exists()
+    assert not (tmp_path / ".wayfinder").exists()
     assert not (tmp_path / "pyproject.toml").exists()
     assert guardrails.check(tmp_path, Config()) == []
     assert main(["init", "--path", str(tmp_path)]) == 0

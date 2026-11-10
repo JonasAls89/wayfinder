@@ -4,14 +4,15 @@ Index of context documents. Refresh with `/wayfinder:context` or `uv run python 
 
 Domain language: [Glossary](../GLOSSARY.md).
 
-<!-- automagic:context:start -->
+<!-- wayfinder:context:start -->
 - [Guardrails](GUARDRAILS.md)
 - [Architecture decision records](adr/0000-template.md)
 - [AGENTS.md](../AGENTS.md)
 - [INTENT.md](../INTENT.md)
 - [GLOSSARY.md](../GLOSSARY.md)
 - [.github/copilot-instructions.md](../.github/copilot-instructions.md)
-<!-- automagic:context:end -->
+<!-- wayfinder:context:end -->
 
 Current operating contract: [Current workflow only](adr/0018-current-workflow-only.md).
 Public plugin namespace: [Wayfinder](adr/0020-wayfinder-plugin-namespace.md).
+Runtime and state namespace: [Complete Wayfinder rename](adr/0021-complete-wayfinder-rename.md).

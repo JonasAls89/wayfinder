@@ -20,8 +20,8 @@ Update active guidance, generated assets and helper handoffs to those commands.
 
 This is a public namespace change, not a runtime migration. Keep the Git
 repository URL, [Python package](../../pyproject.toml),
-[execution storage](../../src/automagic/execution.py) under `.automagic/` and
-[managed context markers](../../src/automagic/guardrails.py) unchanged.
+[execution storage](../../src/wayfinder/execution.py) and
+[managed context markers](../../src/wayfinder/guardrails.py) unchanged.
 Renaming those internals would add unrelated migration and import changes.
 
 ## Consequences
