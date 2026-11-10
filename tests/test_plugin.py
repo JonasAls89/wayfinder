@@ -17,16 +17,18 @@ def test_exactly_five_consistent_plugin_skills_and_resolvable_resources():
     manifest = json.loads((BUNDLE / ".claude-plugin/plugin.json").read_text())
     assert manifest["name"] == "wayfinder"
     assert manifest["repository"] == "https://github.com/JonasAls89/wayfinder"
-    names = {"init", "context", "intent", "worktrees", "run"}
+    names = {f"wayfinder-{name}" for name in ("init", "context", "intent", "worktrees", "run")}
     assert set(manifest["skills"]) == {f"./skills/{name}" for name in names}
     assert {path.name for path in (BUNDLE / "skills").iterdir() if path.is_dir()} == names
     readme = (BUNDLE / "README.md").read_text()
     for name in names:
         path = BUNDLE / "skills" / name / "SKILL.md"
         text = path.read_text()
-        assert f"name: {name}\n" in text
-        assert "disable-model-invocation: true" in text
-        assert f"/wayfinder:{name}" in readme
+        frontmatter = yaml.safe_load(text.split("---", 2)[1])
+        assert frontmatter["name"] == name
+        assert frontmatter["disable-model-invocation"] is True
+        assert f"[/{name}]" in readme
+        assert "/wayfinder:" not in text
         for link in _links(text):
             if link.startswith("https://"):
                 continue

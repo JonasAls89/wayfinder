@@ -6,13 +6,14 @@ from wayfinder import guardrails
 from wayfinder.config import Config
 from wayfinder.scaffold import scaffold
 
-ASSETS = BUNDLE / "skills/init/assets"
+ASSETS = BUNDLE / "skills/wayfinder-init/assets"
 
 
 def test_init_creates_documentation_and_setup_configs_idempotently(tmp_path, capsys):
     assert main(["init", "--path", str(tmp_path), "--name", "Demo"]) == 0
     output = capsys.readouterr().out
-    assert "Next: /wayfinder:intent" in output
+    assert "Next: /wayfinder-intent" in output
+    assert "then /grill-with-docs" in output
     assert "pre-commit hooks and Dependabot ecosystems" in output
     files = {
         path.relative_to(tmp_path).as_posix(): path.read_bytes()
@@ -25,7 +26,7 @@ def test_init_creates_documentation_and_setup_configs_idempotently(tmp_path, cap
         ".github/copilot-instructions.md": "intent",
         ".github/instructions/docs.instructions.md": "context",
     }.items():
-        assert f"/wayfinder:{skill}".encode() in files[name]
+        assert f"/wayfinder-{skill}".encode() in files[name]
     assert b"<!-- wayfinder:context:start -->" in files["docs/CONTEXT.md"]
     assert b"<!-- wayfinder:context:end -->" in files["docs/CONTEXT.md"]
     assert b".wayfinder/BRIEF.md" in files["AGENTS.md"]

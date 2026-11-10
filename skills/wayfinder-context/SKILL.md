@@ -1,5 +1,5 @@
 ---
-name: context
+name: wayfinder-context
 description: Refresh the repository context index and validate Markdown grounding and size.
 disable-model-invocation: true
 ---

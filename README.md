@@ -26,12 +26,30 @@ For local development without a persistent installation, start a session with:
 gh copilot -- --plugin-dir /absolute/path/to/wayfinder
 ```
 
-In a fresh session, use `/skills list` to verify discovery. Install the complete
-bundle, not individual skill folders: it contains the
+In a fresh session, use `/skills list` and `/skills info wayfinder-context` to
+verify discovery. The five skills below should have plugin source locations.
+Install the complete bundle, not individual skill folders: it contains the
 [plugin manifest](.claude-plugin/plugin.json), [skills](skills/), assets and
-[private helpers](scripts/helper.py). The plugin name supplies the `wayfinder`
-namespace; skill names remain unprefixed. Invoke `/wayfinder:context`, not the
-bare `/context`, to avoid command-name collisions.
+[private helpers](scripts/helper.py). The `wayfinder-` prefix is part of each
+skill's actual name and directory, not an automatically supplied plugin namespace.
+Copilot CLI discovers those literal names; do not assume colon-style aliases.
+For explicit invocation, submit a normal prompt:
+
+```text
+Use the /wayfinder-context skill to refresh and validate this repository.
+```
+
+In VS Code, select the discovered skill in the slash-command picker.
+The bare `/context` and `/init` names can collide with client commands.
+See [Copilot CLI's skill invocation documentation](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-skills#using-agent-skills).
+
+After updating an existing installation, start a fresh session and check the
+source with `/skills info wayfinder-context`. Separately installed personal
+copies of the old unprefixed skills are not complete plugin bundles. Use
+`/skills info context` to locate them, then review and move aside only those
+obsolete Wayfinder copies; the plugin never removes personal skills automatically.
+Missing repository-instructions and Connectors-login notices are separate from
+plugin discovery.
 
 The public plugin and private Python package both use `wayfinder`. Runtime
 data lives under `.wayfinder/`, and managed context markers use
@@ -43,47 +61,47 @@ automatically imported or deleted
 
 Execution requires uv, Python 3.12+ and Git. Running agents additionally requires
 Copilot CLI. Thorough planning uses your separately installed Matt Pocock plugin,
-whose verified planning skill is `/mattpocock-skills:grill-with-docs`.
+whose planning skill is `/grill-with-docs`; verify its discovery with `/skills list`.
 Wayfinder does not install or vendor it.
 
 ## Workflows
 
 | Skill | What it does |
 |---|---|
-| [/wayfinder:init](skills/init/SKILL.md) | Docs, GitHub configs and guided pre-commit setup. |
-| [/wayfinder:context](skills/context/SKILL.md) | Refreshes the managed context index and validates active document size and relative links. |
-| [/wayfinder:intent](skills/intent/SKILL.md) | Captures high-level project purpose, users, outcomes, scope and constraints in root `INTENT.md`. |
-| [/wayfinder:worktrees](skills/worktrees/SKILL.md) | Proposes bounded work from approved design, then offers approval and creation separately. |
-| [/wayfinder:run](skills/run/SKILL.md) | Previews/runs committed approved work with Copilot CLI, verification and dependencies. |
+| [/wayfinder-init](skills/wayfinder-init/SKILL.md) | Docs, GitHub configs and guided pre-commit setup. |
+| [/wayfinder-context](skills/wayfinder-context/SKILL.md) | Refreshes the managed context index and validates active document size and relative links. |
+| [/wayfinder-intent](skills/wayfinder-intent/SKILL.md) | Captures high-level project purpose, users, outcomes, scope and constraints in root `INTENT.md`. |
+| [/wayfinder-worktrees](skills/wayfinder-worktrees/SKILL.md) | Proposes bounded work from approved design, then offers approval and creation separately. |
+| [/wayfinder-run](skills/wayfinder-run/SKILL.md) | Previews/runs committed approved work with Copilot CLI, verification and dependencies. |
 
 These are user-invoked workflows. Installing the plugin or capturing intent does
 not start planning, create branches or launch agents.
 
 ### Intent to execution
 
-1. Apply the [documentation/setup assets](skills/init/assets/), including
+1. Apply the [documentation/setup assets](skills/wayfinder-init/assets/), including
    `.github/dependabot.yml`, `.github/zizmor.yml` and `.pre-commit-config.yaml`.
    Pinned zizmor checks and weekly Actions updates with a 7-day cooldown are included.
    Init proposes stack-specific hooks and package updates from actual manifests.
    No application/CI/dependency scaffolding; Git-hook installation and execution
    require confirmation.
-2. Capture intent with `/wayfinder:intent`. Confirm its proposed edits;
+2. Capture intent with `/wayfinder-intent`. Confirm its proposed edits;
    intent approval is not design approval.
-3. Invoke `/mattpocock-skills:grill-with-docs` yourself, supplying intent and
+3. Invoke `/grill-with-docs` yourself, supplying intent and
    relevant repository context. Preserve the approved design in repository
    documents; an ADR collection alone does not prove planning is complete.
-4. Use `/wayfinder:worktrees`. Review the deliverables, acceptance criteria,
+4. Use `/wayfinder-worktrees`. Review the deliverables, acceptance criteria,
    exact allowed files, estimates, blocking edges and verification evidence.
    Unresolved design questions go back to external planning.
 5. Review and commit the handoff and its inputs yourself. Approve the exact
    preview, then separately confirm worktree creation.
-6. Preview `/wayfinder:run`, then confirm unattended execution. Review and
+6. Preview `/wayfinder-run`, then confirm unattended execution. Review and
    manually commit prerequisite work before resuming dependent items.
 
 ### Markdown handoff
 
-The [index template](skills/worktrees/assets/_index.md) becomes
-`docs/work/_index.md`; the [work-item template](skills/worktrees/assets/work-item.md)
+The [index template](skills/wayfinder-worktrees/assets/_index.md) becomes
+`docs/work/_index.md`; the [work-item template](skills/wayfinder-worktrees/assets/work-item.md)
 becomes one Markdown file per stable ID. Fill every placeholder. Metadata uses
 one fenced TOML block:
 
@@ -145,7 +163,7 @@ The current-only support policy is in
 [ADR 0019](docs/adr/0019-repository-security-setup.md).
 
 For npm/JavaScript/TypeScript repositories, see the
-[project tooling and worktree setup guide](skills/run/references/npm-projects.md).
+[project tooling and worktree setup guide](skills/wayfinder-run/references/npm-projects.md).
 
 ### Why not Cookiecutter?
 

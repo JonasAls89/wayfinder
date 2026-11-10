@@ -4,7 +4,7 @@
 
 - Instruction and context files (`AGENTS.md`, `.github/copilot-instructions.md`, `.github/instructions/*`, `docs/*.md`) stay under {{ max_instruction_bytes }} bytes each.
 - Work items fit one agent context window (about {{ max_context_tokens }} tokens) and one human review (about {{ max_changed_lines }} changed lines).
-- `/wayfinder:context` validates context size and links. Execution also checks changed-line limits and approved file scope.
+- `/wayfinder-context` validates context size and links. Execution also checks changed-line limits and approved file scope.
 
 ## Grounding
 

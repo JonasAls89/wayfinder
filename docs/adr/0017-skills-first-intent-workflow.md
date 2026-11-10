@@ -18,7 +18,7 @@ publication and review surfaces are retired.
 
 Keep high-level project scope in [INTENT.md](../../INTENT.md); the external
 user-invoked `mattpocock-skills:grill-with-docs` owns design interviews. Wayfinder's
-[worktrees skill](../../skills/worktrees/SKILL.md) proposes implementation-sized
+[worktrees skill](../../skills/wayfinder-worktrees/SKILL.md) proposes implementation-sized
 work items without resolving new design decisions.
 
 Use reviewed Markdown under `docs/work/`, with typed fenced TOML metadata.

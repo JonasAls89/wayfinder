@@ -1,5 +1,5 @@
 ---
-name: init
+name: wayfinder-init
 description: Set up repository docs, GitHub security configuration and language/framework-aware pre-commit checks.
 disable-model-invocation: true
 ---
@@ -40,7 +40,7 @@ uv run --project <plugin-root> --locked python <plugin-root>/scripts/helper.py i
    configs rather than replacing custom hooks. Keep a pinned zizmor hook in the
    final configuration, even when the baseline config was skipped.
    For npm/JavaScript/TypeScript projects, follow the
-   [project tooling guide](../run/references/npm-projects.md).
+   [project tooling guide](../wayfinder-run/references/npm-projects.md).
 5. Propose weekly Dependabot entries for the actual package ecosystems and
    manifest/lockfile directories. Framework names are not package ecosystems:
    verify the package-manager mapping against
@@ -66,5 +66,5 @@ uv run --project <plugin-root> --locked python <plugin-root>/scripts/helper.py i
 7. Completion means the generated/merged configs are reviewed, hook syntax is
    valid, and pinned zizmor remains present. State whether hooks were installed
    and run; a declined setup step is not a completed step.
-   Show `/wayfinder:intent` as the next user invocation. Do not start planning,
+   Show `/wayfinder-intent` as the next user invocation. Do not start planning,
    create worktrees or launch agents automatically.

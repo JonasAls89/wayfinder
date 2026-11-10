@@ -1,5 +1,5 @@
 ---
-name: worktrees
+name: wayfinder-worktrees
 description: Turn an externally approved design into reviewed Markdown work items and Git worktrees.
 disable-model-invocation: true
 ---
@@ -8,7 +8,7 @@ disable-model-invocation: true
    planning documents. Obtain confirmation that the design is externally approved.
    ADRs, an intent document or a quiet interviewer alone do not prove readiness.
    If scope, acceptance, constraints or blocking decisions remain unresolved,
-   show the gap and send the user back to `/mattpocock-skills:grill-with-docs`.
+   show the gap and send the user back to `/grill-with-docs`.
 2. Propose execution-sized work items, not new design decisions. Each should fit
    one context window (about 40,000 tokens) and a review (about 400 changed lines).
    Show each item's deliverable, acceptance criteria, exact allowed files,
@@ -47,5 +47,5 @@ disable-model-invocation: true
    are reused; collisions require explicit resolution, never reset or deletion.
    Report created paths and outstanding setup for each worktree. Dependencies
    from the main checkout are not copied; setup installs require confirmation.
-7. Show `/wayfinder:run`. Changed inputs/base commits require a new reviewed
+7. Show `/wayfinder-run`. Changed inputs/base commits require a new reviewed
    snapshot. Do not silently replan, start agents, commit or push.

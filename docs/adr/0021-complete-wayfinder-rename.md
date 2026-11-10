@@ -23,7 +23,7 @@ and logs, and `.wayfinder/BRIEF.md` for worktree briefs. The
 state from design inputs and execution-owned files from implementation scope.
 Use `wayfinder:context` for the
 [managed context markers](../../src/wayfinder/guardrails.py), including generated
-[context documents](../../skills/init/assets/docs/CONTEXT.md.j2).
+[context documents](../../skills/wayfinder-init/assets/docs/CONTEXT.md.j2).
 Reviewed plans remain in `docs/work/`; no runtime plan directory is generated.
 
 This supersedes ADR 0020's internal-name preservation policy. Existing ADR names

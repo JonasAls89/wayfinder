@@ -13,13 +13,13 @@ scaffolding or a hardcoded framework matrix.
 
 ## Decision
 
-Extend [init](../../skills/init/SKILL.md) with three bundled setup files:
+Extend [init](../../skills/wayfinder-init/SKILL.md) with three bundled setup files:
 
-- [Dependabot](../../skills/init/assets/.github/dependabot.yml), initially weekly
+- [Dependabot](../../skills/wayfinder-init/assets/.github/dependabot.yml), initially weekly
   GitHub Actions updates at the repository root with a seven-day version cooldown.
-- [zizmor configuration](../../skills/init/assets/.github/zizmor.yml), leaving
+- [zizmor configuration](../../skills/wayfinder-init/assets/.github/zizmor.yml), leaving
   default audits enabled, not a generated CI workflow.
-- [Pre-commit configuration](../../skills/init/assets/.pre-commit-config.yaml),
+- [Pre-commit configuration](../../skills/wayfinder-init/assets/.pre-commit-config.yaml),
   with common file checks and the pinned official zizmor hook.
 
 The [scaffolder](../../src/wayfinder/scaffold.py) permits these YAML paths in

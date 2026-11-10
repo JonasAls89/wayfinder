@@ -1,11 +1,11 @@
 ---
-name: run
+name: wayfinder-run
 description: Run and verify an approved committed execution snapshot in dependency-ordered worktrees.
 disable-model-invocation: true
 ---
 
 1. Read intent, context/guardrails and `docs/work/_index.md`. Planning and the
-   execution breakdown must be approved through `/wayfinder:worktrees`.
+   execution breakdown must be approved through `/wayfinder-worktrees`.
 2. Resolve the plugin root two levels above this directory. Substitute and
    shell-quote absolute paths, and preview with the [private helper](../../scripts/helper.py):
 
@@ -34,7 +34,7 @@ disable-model-invocation: true
    and rerun to resume. Committed prerequisites are integrated by the confirmed
    orchestrator, never by implementation agents.
 6. Never stage, commit, push, merge or reset on the user's behalf. A changed
-   execution snapshot requires `/wayfinder:worktrees` review/reapproval; do not
+   execution snapshot requires `/wayfinder-worktrees` review/reapproval; do not
    silently reuse approval or overwrite existing worktrees.
    If a helper lock was abandoned, verify no helper/workers are active before
    asking for explicit removal of that specific lock; never remove a live lock.

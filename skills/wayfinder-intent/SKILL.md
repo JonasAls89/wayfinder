@@ -1,5 +1,5 @@
 ---
-name: intent
+name: wayfinder-intent
 description: Capture or revise high-level project purpose, users, outcomes and scope in INTENT.md.
 disable-model-invocation: true
 ---
@@ -19,7 +19,7 @@ disable-model-invocation: true
    substituting and shell-quoting absolute paths.
 5. Show this explicit user handoff:
 
-   `/mattpocock-skills:grill-with-docs`
+   `/grill-with-docs`
 
    Ask the user to give that skill `INTENT.md` and the relevant context/decisions
    as planning inputs, and preserve the settled design in repository documents.
@@ -27,5 +27,5 @@ disable-model-invocation: true
    instructions. If unavailable, report the missing dependency and direct the
    user to install their Matt Pocock plugin; do not claim planning is complete.
 6. Explain that, after external planning and explicit design approval,
-   `/wayfinder:worktrees` proposes the reviewed execution handoff, then
-   `/wayfinder:run` executes it. Neither step starts automatically.
+   `/wayfinder-worktrees` proposes the reviewed execution handoff, then
+   `/wayfinder-run` executes it. Neither step starts automatically.
