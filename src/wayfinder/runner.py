@@ -31,10 +31,10 @@ DONE: Final = "done"
 FAILED: Final = "failed"
 BLOCKED: Final = "blocked"
 RunStatus = Literal["pending", "running", "done", "failed", "blocked"]
-BRIEF_PATH = ".wayfinder/BRIEF.md"
+BRIEF_PATH = ".automagic/BRIEF.md"
 
 PROMPT = (
-    "Read .wayfinder/BRIEF.md and AGENTS.md (if present). Implement only the work item "
+    "Read .automagic/BRIEF.md and AGENTS.md (if present). Implement only the work item "
     "described in the brief; do not expand scope. Run the project's quality gates, then leave "
     "your changes in the worktree for human review and commit grouping. Preserve existing "
     "staging. Do not stage, commit, push, merge, rebase or switch branches."

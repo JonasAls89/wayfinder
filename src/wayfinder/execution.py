@@ -68,7 +68,7 @@ def repository_path(root: Path, relative: str) -> Path:
 
 
 def state_path(root: Path, relative: str) -> Path:
-    path = repository_path(root, f".wayfinder/execution/{relative}")
+    path = repository_path(root, f".automagic/execution/{relative}")
     for parent in (path, *path.parents):
         if parent == root:
             break
@@ -221,7 +221,7 @@ def load_plan(root: Path, cfg: Config | None = None) -> Plan:
         raise ValueError(f"Resolve design blockers with external grilling: {index.blockers}")
     read("INTENT.md")
     for relative in index.sources:
-        if relative.startswith(".wayfinder/"):
+        if relative.startswith(".automagic/"):
             raise ValueError(f"Runtime state is not a design input: {relative}")
         read(relative)
     for relative in GUIDANCE:
@@ -242,8 +242,8 @@ def load_plan(root: Path, cfg: Config | None = None) -> Plan:
             target = repository_path(root, name)
             if (
                 target.is_dir()
-                or name == ".wayfinder/BRIEF.md"
-                or name.startswith(".wayfinder/execution/")
+                or name == ".automagic/BRIEF.md"
+                or name.startswith(".automagic/execution/")
             ):
                 raise ValueError(f"{item.id}: declare individual non-runtime files: {name}")
         evidence = [read(name) for name in item.verify_sources]

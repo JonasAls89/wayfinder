@@ -183,7 +183,7 @@ def create(plan: Plan, proposals: list[Proposal], repo: Path) -> list[Path]:
             plan.runtime_path(repo, "worktrees.json"), owned.model_dump_json(indent=2) + "\n"
         )
         require_input_contents(prop.path, plan)
-        target = prop.path / ".wayfinder"
+        target = prop.path / ".automagic"
         target.mkdir(parents=True, exist_ok=True)
         (target / "BRIEF.md").write_text(brief(plan, prop))
         created.append(prop.path)
