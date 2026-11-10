@@ -1,8 +1,8 @@
 {
-  "name": "automagic",
+  "name": "wayfinder",
   "version": "0.1.0",
   "description": "Markdown repository baselines, project intent, and reviewed worktree execution.",
-  "repository": "https://github.com/JonasAls89/automagic-cli",
+  "repository": "https://github.com/JonasAls89/wayfinder",
   "skills": [
     "./skills/init",
     "./skills/context",

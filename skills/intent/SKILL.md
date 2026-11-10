@@ -27,5 +27,5 @@ disable-model-invocation: true
    instructions. If unavailable, report the missing dependency and direct the
    user to install their Matt Pocock plugin; do not claim planning is complete.
 6. Explain that, after external planning and explicit design approval,
-   `/automagic:worktrees` proposes the reviewed execution handoff, then
-   `/automagic:run` executes it. Neither step starts automatically.
+   `/wayfinder:worktrees` proposes the reviewed execution handoff, then
+   `/wayfinder:run` executes it. Neither step starts automatically.

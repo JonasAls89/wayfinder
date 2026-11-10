@@ -1,7 +1,9 @@
-# automagic
+# Wayfinder
+
+From intent to verified work.
 
 Five Copilot skills connecting intent, external planning and verified worktree
-execution, plus docs/security setup. No public `automagic` CLI.
+execution, plus docs/security setup. No standalone Wayfinder CLI.
 
 ## Install
 
@@ -11,24 +13,46 @@ In VS Code, use **Chat: Install Plugin from Source** with
 See [VS Code's plugin documentation](https://code.visualstudio.com/docs/agent-customization/agent-plugins)
 for harness and policy requirements.
 
-Install the complete bundle, not individual skill folders. It contains the
+For Copilot CLI, install the plugin from a terminal:
+
+```sh
+gh copilot -- plugin install JonasAls89/automagic-cli
+gh copilot -- plugin list
+```
+
+For local development without a persistent installation, start a session with:
+
+```sh
+gh copilot -- --plugin-dir /absolute/path/to/automagic-cli
+```
+
+In a fresh session, use `/skills list` to verify discovery. Install the complete
+bundle, not individual skill folders: it contains the
 [plugin manifest](.claude-plugin/plugin.json), [skills](skills/), assets and
-[private helpers](scripts/helper.py). The skill namespace is `automagic`.
+[private helpers](scripts/helper.py). The plugin name supplies the `wayfinder`
+namespace; skill names remain unprefixed. Invoke `/wayfinder:context`, not the
+bare `/context`, to avoid command-name collisions.
+
+Existing `automagic` installations must install Wayfinder separately, then
+disable or uninstall the old plugin in the client where it was installed.
+No old command aliases or automatic cleanup are provided. The repository URL,
+private Python package, runtime state and context markers retain their existing
+names ([namespace decision](docs/adr/0020-wayfinder-plugin-namespace.md)).
 
 Execution requires uv, Python 3.12+ and Git. Running agents additionally requires
 Copilot CLI. Thorough planning uses your separately installed Matt Pocock plugin,
 whose verified planning skill is `/mattpocock-skills:grill-with-docs`.
-Automagic does not install or vendor it.
+Wayfinder does not install or vendor it.
 
 ## Workflows
 
 | Skill | What it does |
 |---|---|
-| [/automagic:init](skills/init/SKILL.md) | Docs, GitHub configs and guided pre-commit setup. |
-| [/automagic:context](skills/context/SKILL.md) | Refreshes the managed context index and validates active document size and relative links. |
-| [/automagic:intent](skills/intent/SKILL.md) | Captures high-level project purpose, users, outcomes, scope and constraints in root `INTENT.md`. |
-| [/automagic:worktrees](skills/worktrees/SKILL.md) | Proposes bounded work from approved design, then offers approval and creation separately. |
-| [/automagic:run](skills/run/SKILL.md) | Previews/runs committed approved work with Copilot CLI, verification and dependencies. |
+| [/wayfinder:init](skills/init/SKILL.md) | Docs, GitHub configs and guided pre-commit setup. |
+| [/wayfinder:context](skills/context/SKILL.md) | Refreshes the managed context index and validates active document size and relative links. |
+| [/wayfinder:intent](skills/intent/SKILL.md) | Captures high-level project purpose, users, outcomes, scope and constraints in root `INTENT.md`. |
+| [/wayfinder:worktrees](skills/worktrees/SKILL.md) | Proposes bounded work from approved design, then offers approval and creation separately. |
+| [/wayfinder:run](skills/run/SKILL.md) | Previews/runs committed approved work with Copilot CLI, verification and dependencies. |
 
 These are user-invoked workflows. Installing the plugin or capturing intent does
 not start planning, create branches or launch agents.
@@ -41,17 +65,17 @@ not start planning, create branches or launch agents.
    Init proposes stack-specific hooks and package updates from actual manifests.
    No application/CI/dependency scaffolding; Git-hook installation and execution
    require confirmation.
-2. Capture intent with `/automagic:intent`. Confirm its proposed edits;
+2. Capture intent with `/wayfinder:intent`. Confirm its proposed edits;
    intent approval is not design approval.
 3. Invoke `/mattpocock-skills:grill-with-docs` yourself, supplying intent and
    relevant repository context. Preserve the approved design in repository
    documents; an ADR collection alone does not prove planning is complete.
-4. Use `/automagic:worktrees`. Review the deliverables, acceptance criteria,
+4. Use `/wayfinder:worktrees`. Review the deliverables, acceptance criteria,
    exact allowed files, estimates, blocking edges and verification evidence.
    Unresolved design questions go back to external planning.
 5. Review and commit the handoff and its inputs yourself. Approve the exact
    preview, then separately confirm worktree creation.
-6. Preview `/automagic:run`, then confirm unattended execution. Review and
+6. Preview `/wayfinder:run`, then confirm unattended execution. Review and
    manually commit prerequisite work before resuming dependent items.
 
 ### Markdown handoff

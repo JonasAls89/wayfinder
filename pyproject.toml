@@ -1,5 +1,5 @@
 [project]
-name = "automagic"
+name = "wayfinder"
 version = "0.1.0"
 description = "Copilot skills for Markdown baselines, project intent and reviewed worktree execution"
 readme = "README.md"
@@ -15,7 +15,7 @@ dev = ["pytest", "pytest-cov", "ruff", "bandit[toml]", "prek"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src", "."]
-addopts = ["--cov=automagic", "--cov=scripts", "--cov-report=term-missing"]
+addopts = ["--cov=wayfinder", "--cov=scripts", "--cov-report=term-missing"]
 
 [tool.coverage.report]
 fail_under = 90

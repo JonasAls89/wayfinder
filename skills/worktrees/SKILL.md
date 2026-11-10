@@ -47,5 +47,5 @@ disable-model-invocation: true
    are reused; collisions require explicit resolution, never reset or deletion.
    Report created paths and outstanding setup for each worktree. Dependencies
    from the main checkout are not copied; setup installs require confirmation.
-7. Show `/automagic:run`. Changed inputs/base commits require a new reviewed
+7. Show `/wayfinder:run`. Changed inputs/base commits require a new reviewed
    snapshot. Do not silently replan, start agents, commit or push.

@@ -14,21 +14,25 @@ from scripts.helper import BUNDLE, main
 
 def test_exactly_five_consistent_plugin_skills_and_resolvable_resources():
     manifest = json.loads((BUNDLE / ".claude-plugin/plugin.json").read_text())
-    assert manifest["name"] == "automagic"
+    assert manifest["name"] == "wayfinder"
     names = {"init", "context", "intent", "worktrees", "run"}
     assert set(manifest["skills"]) == {f"./skills/{name}" for name in names}
     assert {path.name for path in (BUNDLE / "skills").iterdir() if path.is_dir()} == names
+    readme = (BUNDLE / "README.md").read_text()
     for name in names:
         path = BUNDLE / "skills" / name / "SKILL.md"
         text = path.read_text()
         assert f"name: {name}\n" in text
         assert "disable-model-invocation: true" in text
+        assert f"/wayfinder:{name}" in readme
+        assert "/automagic:" not in text
         for link in _links(text):
             if link.startswith("https://"):
                 continue
             assert (path.parent / link).resolve().is_relative_to(BUNDLE)
             assert (path.parent / link).exists()
     project = tomllib.loads((BUNDLE / "pyproject.toml").read_text())
+    assert project["project"]["name"] == "automagic"
     assert "scripts" not in project["project"]
     assert check(BUNDLE, Config()) == []
 

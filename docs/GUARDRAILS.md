@@ -4,7 +4,7 @@
 
 - Instruction and context files (`AGENTS.md`, `.github/copilot-instructions.md`, `.github/instructions/*`, `docs/*.md`) stay under 8000 bytes each.
 - Work items fit one agent context window (about 40000 tokens) and one human review (about 400 changed lines).
-- `/automagic:context` validates active context documents. This repository's pre-commit hook uses the private read-only helper (`uv run python scripts/helper.py context --check`).
+- `/wayfinder:context` validates active context documents. This repository's pre-commit hook uses the private read-only helper (`uv run python scripts/helper.py context --check`).
 
 ## Grounding
 

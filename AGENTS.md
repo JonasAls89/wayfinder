@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Instructions for AI coding agents working on automagic.
+Instructions for AI coding agents working on Wayfinder.
 
 1. Read [docs/CONTEXT.md](docs/CONTEXT.md) for the repository map, and [docs/GUARDRAILS.md](docs/GUARDRAILS.md) for the rules.
 2. Read [INTENT.md](INTENT.md) for project-level scope. Ground every statement in repository files. Ask instead of guessing.

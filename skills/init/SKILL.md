@@ -66,5 +66,5 @@ uv run --project <plugin-root> --locked python <plugin-root>/scripts/helper.py i
 7. Completion means the generated/merged configs are reviewed, hook syntax is
    valid, and pinned zizmor remains present. State whether hooks were installed
    and run; a declined setup step is not a completed step.
-   Show `/automagic:intent` as the next user invocation. Do not start planning,
+   Show `/wayfinder:intent` as the next user invocation. Do not start planning,
    create worktrees or launch agents automatically.

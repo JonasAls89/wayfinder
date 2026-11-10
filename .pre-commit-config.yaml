@@ -25,8 +25,8 @@ repos:
       - id: zizmor
   - repo: local
     hooks:
-      - id: automagic-context
-        name: automagic guardrails
+      - id: wayfinder-context
+        name: wayfinder guardrails
         entry: uv run python scripts/helper.py context --check
         language: system
         pass_filenames: false

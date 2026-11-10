@@ -98,7 +98,7 @@ def main(argv: list[str] | None = None) -> int:
                 "Setup: tailor pre-commit hooks and Dependabot ecosystems "
                 "to the language/framework."
             )
-            print("Next: /automagic:intent, then /mattpocock-skills:grill-with-docs")
+            print("Next: /wayfinder:intent, then /mattpocock-skills:grill-with-docs")
             return 0
         if args.action == "context":
             if not args.check:

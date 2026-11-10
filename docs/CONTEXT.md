@@ -1,6 +1,6 @@
 # Repository context
 
-Index of context documents. Refresh with `/automagic:context` or `uv run python scripts/helper.py context` in this checkout.
+Index of context documents. Refresh with `/wayfinder:context` or `uv run python scripts/helper.py context` in this checkout.
 
 Domain language: [Glossary](../GLOSSARY.md).
 
@@ -14,3 +14,4 @@ Domain language: [Glossary](../GLOSSARY.md).
 <!-- automagic:context:end -->
 
 Current operating contract: [Current workflow only](adr/0018-current-workflow-only.md).
+Public plugin namespace: [Wayfinder](adr/0020-wayfinder-plugin-namespace.md).

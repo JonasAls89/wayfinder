@@ -12,13 +12,22 @@ ASSETS = BUNDLE / "skills/init/assets"
 def test_init_creates_documentation_and_setup_configs_idempotently(tmp_path, capsys):
     assert main(["init", "--path", str(tmp_path), "--name", "Demo"]) == 0
     output = capsys.readouterr().out
-    assert "Next: /automagic:intent" in output
+    assert "Next: /wayfinder:intent" in output
     assert "pre-commit hooks and Dependabot ecosystems" in output
     files = {
         path.relative_to(tmp_path).as_posix(): path.read_bytes()
         for path in tmp_path.rglob("*")
         if path.is_file()
     }
+    for name, skill in {
+        "docs/CONTEXT.md": "context",
+        "docs/GUARDRAILS.md": "context",
+        ".github/copilot-instructions.md": "intent",
+        ".github/instructions/docs.instructions.md": "context",
+    }.items():
+        assert f"/wayfinder:{skill}".encode() in files[name]
+    assert guardrails.START.encode() in files["docs/CONTEXT.md"]
+    assert guardrails.END.encode() in files["docs/CONTEXT.md"]
     yaml_files = {
         ".github/dependabot.yml",
         ".github/zizmor.yml",

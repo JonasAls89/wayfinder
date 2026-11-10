@@ -1,4 +1,4 @@
-# Copilot instructions for automagic
+# Copilot instructions for Wayfinder
 
 Keep this file short. Detailed context lives in `docs/` and is indexed in [docs/CONTEXT.md](../docs/CONTEXT.md).
 
